@@ -10,6 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>eams_ssm_domain</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.ruki.eams_ssm</groupId>
+            <artifactId>eams_ssm_utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>

@@ -1,5 +1,7 @@
 package com.ruki.eams.domain;
 
+import com.ruki.eams.utils.DateUtils;
+
 import java.util.Date;
 
 /**
@@ -58,10 +60,14 @@ public class Product {
     }
 
     public String getDepartureTimeStr() {
+        if(departureTime != null){
+            departureTimeStr = DateUtils.date2String(departureTime, "yyyy-MM-dd HH:mm:ss");
+        }
         return departureTimeStr;
     }
 
     public void setDepartureTimeStr(String departureTimeStr) {
+
         this.departureTimeStr = departureTimeStr;
     }
 
@@ -90,6 +96,11 @@ public class Product {
     }
 
     public String getProductStatusStr() {
+        // 状态 0 关闭 1 开启
+        if(productStatus != null){
+            if(productStatus == 0) productStatusStr = "关闭";
+            if(productStatus == 1) productStatusStr = "开启";
+        }
         return productStatusStr;
     }
 
