@@ -7,12 +7,12 @@ public class Traveller {
     private String phoneNum;
 
     private Integer credentialsType;
-    private String credentialsTypeStr;//
+    private String credentialsTypeStr;//证件类型 0身份证 1护照 2军官证
 
     private String credentialsNum;
 
     private Integer travellerType;
-    private String travellerTypeStr;//
+    private String travellerTypeStr;//游客类型
 
     public String getId() {
         return id;
@@ -47,6 +47,8 @@ public class Traveller {
     }
 
     public Integer getCredentialsType() {
+
+
         return credentialsType;
     }
 
@@ -55,6 +57,12 @@ public class Traveller {
     }
 
     public String getCredentialsTypeStr() {
+        //证件类型 0身份证 1护照 2军官证
+        if(credentialsType != null){
+            if(0 == credentialsType) credentialsTypeStr = "身份证";
+            if(1 == credentialsType) credentialsTypeStr = "护照";
+            if(2 == credentialsType) credentialsTypeStr = "军官证";
+        }
         return credentialsTypeStr;
     }
 
@@ -79,6 +87,11 @@ public class Traveller {
     }
 
     public String getTravellerTypeStr() {
+        //旅客类型（人群） 0 成人 1 儿童
+        if(travellerType != null){
+            if(0 == travellerType) travellerTypeStr = "成人";
+            if(1 == travellerType) travellerTypeStr = "儿童";
+        }
         return travellerTypeStr;
     }
 

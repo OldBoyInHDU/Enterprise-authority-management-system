@@ -19,7 +19,7 @@ public class OrdersController {
     private IOrdersService ordersService;
 
     /**
-     * 未分页的查询全部
+     * 未分页的查询全部订单
      * @return
      * @throws Exception
      */
@@ -32,6 +32,14 @@ public class OrdersController {
         return mv;
     }*/
 
+    /**
+     * 有分页的查询全部订单
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+
     @RequestMapping("/findAll.do")
     public ModelAndView findAll(@RequestParam(name = "page", required = true, defaultValue = "1") int page, @RequestParam(name = "size", required = true, defaultValue = "4") int size) throws Exception {
         ModelAndView mv = new ModelAndView();
@@ -40,6 +48,15 @@ public class OrdersController {
         PageInfo pageInfo = new PageInfo(ordersList);
         mv.addObject("pageInfo", pageInfo);
         mv.setViewName("orders-page-list");
+        return mv;
+    }
+
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(name = "id", required = true) String orderId) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        Orders orders = ordersService.findById(orderId);
+        mv.addObject("orders", orders);
+        mv.setViewName("orders-show");
         return mv;
     }
 

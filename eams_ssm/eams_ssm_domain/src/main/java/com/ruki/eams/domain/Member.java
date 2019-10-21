@@ -5,7 +5,7 @@ public class Member {
     private String id;
     private String name;
     private String nickname;
-    private String phoneNumber;
+    private String phoneNum;
     private String email;
 
     public String getId() {
@@ -32,12 +32,12 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getEmail() {
