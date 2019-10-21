@@ -8,7 +8,7 @@ public class UserInfo {
     private String username;
     private String password;
     private String phoneNum;
-    private Integer status;
+    private Integer status;//状态 0 未开启 1 开启
     private String statusStr;
 
     private List<Role> roles;
@@ -62,6 +62,9 @@ public class UserInfo {
     }
 
     public String getStatusStr() {
+        //状态 0 未开启 1 开启
+        if(status == 0) statusStr = "未开启";
+        if(status == 1) statusStr = "开启";
         return statusStr;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private IUserDao userDao;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = null;
@@ -32,7 +36,12 @@ public class UserServiceImpl implements IUserService {
         }
         //将包含用户信息的userInfo对象封装成UserDetails，明文密码需要在密码前加上前缀
         //User user = new User(userInfo.getUsername(), "{noop}"+userInfo.getPassword(), getAuthority(userInfo.getRoles()));
-        User user = new User(userInfo.getUsername(), "{noop}"+userInfo.getPassword(), userInfo.getStatus() == 1?true:false,true,true,true,getAuthority(userInfo.getRoles()));
+
+        //配置文件中<security:password-encoder ref="passwordEncoder"/>要注释掉
+        //User user = new User(userInfo.getUsername(), "{noop}"+userInfo.getPassword(), userInfo.getStatus() == 1?true:false,true,true,true,getAuthority(userInfo.getRoles()));
+
+
+        User user = new User(userInfo.getUsername(), userInfo.getPassword(), userInfo.getStatus() == 1?true:false,true,true,true,getAuthority(userInfo.getRoles()));
         return user;
     }
 
@@ -46,4 +55,20 @@ public class UserServiceImpl implements IUserService {
         return list;
     }
 
+    @Override
+    public List<UserInfo> findAll() throws Exception{
+        return userDao.findAll();
+    }
+
+    @Override
+    public void save(UserInfo userInfo) throws Exception {
+        //对密码进行加密
+        userInfo.setPassword(bCryptPasswordEncoder.encode(userInfo.getPassword()));
+        userDao.save(userInfo);
+    }
+
+    @Override
+    public UserInfo findById(String id) throws Exception {
+        return userDao.findById(id);
+    }
 }
