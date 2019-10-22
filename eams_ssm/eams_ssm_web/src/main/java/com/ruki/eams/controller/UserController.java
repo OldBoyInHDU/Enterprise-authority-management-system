@@ -4,6 +4,7 @@ import com.ruki.eams.domain.Role;
 import com.ruki.eams.domain.UserInfo;
 import com.ruki.eams.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")//只有ADMIN角色才能执行查询全部的操作
     public ModelAndView findAll() throws Exception {
         ModelAndView mv = new ModelAndView();
         List<UserInfo> userList = userService.findAll();
@@ -50,6 +52,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/save.do")
+    @PreAuthorize("authentication.principal.username='ruki'")//只有ruki用户才能执行保存操作
     public String save(UserInfo userInfo) throws Exception {
         userService.save(userInfo);
         return "redirect:findAll.do";
