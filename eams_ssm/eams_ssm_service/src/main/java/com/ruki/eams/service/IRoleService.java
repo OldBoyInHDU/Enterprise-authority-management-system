@@ -1,6 +1,7 @@
 package com.ruki.eams.service;
 
 
+import com.ruki.eams.domain.Permission;
 import com.ruki.eams.domain.Role;
 
 import java.util.List;
@@ -32,4 +33,19 @@ public interface IRoleService {
      * @param roleId
      */
     void deleteRoleByRoleId(String roleId) throws Exception;
+
+    /**
+     * 根据roleId查询其他未拥有的权限
+     * @param roleId
+     * @return
+     */
+    List<Permission> findOtherPermissionsByRoleId(String roleId) throws Exception;
+
+    /**
+     * 给当前角色添加未拥有的权限
+     * @param roleId
+     * @param permissionIds
+     * @throws Exception
+     */
+    void addPermissionToRole(String roleId, String[] permissionIds) throws Exception;
 }

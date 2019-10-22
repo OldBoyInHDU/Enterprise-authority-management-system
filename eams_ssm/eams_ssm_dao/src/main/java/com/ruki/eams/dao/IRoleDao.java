@@ -1,5 +1,6 @@
 package com.ruki.eams.dao;
 
+import com.ruki.eams.domain.Permission;
 import com.ruki.eams.domain.Role;
 import org.apache.ibatis.annotations.*;
 
@@ -58,4 +59,10 @@ public interface IRoleDao {
 
     @Delete("delete from role_permission where roleId=#{roleId}")
     void deleteFromRole_PermissionByRoleId(String roleId);
+
+    @Select("select * from permission where id not in (select permissionId from role_permission where roleId=#{roleId})")
+    List<Permission> findOtherPermissionsByRoleId(String roleId);
+
+    @Insert("insert into role_permission (permissionId, roleId) values(#{permissionId}, #{roleId})")
+    void addPermissionToRole(@Param("roleId") String roleId, @Param("permissionId") String permissionId);
 }

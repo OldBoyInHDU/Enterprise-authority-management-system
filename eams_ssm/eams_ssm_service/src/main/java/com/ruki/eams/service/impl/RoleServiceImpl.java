@@ -1,6 +1,7 @@
 package com.ruki.eams.service.impl;
 
 import com.ruki.eams.dao.IRoleDao;
+import com.ruki.eams.domain.Permission;
 import com.ruki.eams.domain.Role;
 import com.ruki.eams.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,17 @@ public class RoleServiceImpl implements IRoleService {
         roleDao.deleteFromUsers_RoleByRoleId(roleId);
         roleDao.deleteFromRole_PermissionByRoleId(roleId);
         roleDao.deleteFromRoleByRoleId(roleId);
+    }
+
+    @Override
+    public List<Permission> findOtherPermissionsByRoleId(String roleId) throws Exception {
+        return roleDao.findOtherPermissionsByRoleId(roleId);
+    }
+
+    @Override
+    public void addPermissionToRole(String roleId, String[] permissionIds) throws Exception {
+        for(String permissionId : permissionIds){
+            roleDao.addPermissionToRole(roleId, permissionId);
+        }
     }
 }
